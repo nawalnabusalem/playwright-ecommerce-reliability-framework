@@ -30,16 +30,35 @@ export class ProductsPage{
     async getDisplayedProducts(): Promise<Product[]>{
         const displayedProducts: Product[] = [];
 
-        const productCards = await this.page.locator('a[href^="/en/product/"]').all();
+        const productCards = this.page.locator('a[href^="/en/product/"]');
+        const count = await productCards.count();
 
-        for(let product of productCards){
+        for (let i = 0; i < count; i++) {
+            const product = productCards.nth(i);
+
             const name = await product.locator('h3').innerText();
             const price = Number((await product.locator('p').innerText()).replace('$', ''));
 
-            displayedProducts.push({name, price});
+            displayedProducts.push({ name, price });
         }
         
         return displayedProducts;
+    }
+
+    async selectFilter(filter: string){
+        await this.page.getByRole('checkbox', { name: filter }).click();
+    }
+
+    async removeFilter(filter: string){
+        await this.page.getByRole('checkbox', { name: filter }).click();
+    }
+
+    async clearAllFilters(){
+        await this.page.getByRole('button', { name: 'Clear All' }).click();
+    }
+
+    async waitForProductsCount(count: number) {
+        await expect(this.page.locator('a[href^="/en/product/"]')).toHaveCount(count);
     }
 
     private async selectSortingOption(option: string){
