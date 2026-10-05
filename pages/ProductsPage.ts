@@ -1,4 +1,4 @@
-import {Page, expect} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 import { Product } from '../types/Product';
 
 export class ProductsPage{
@@ -63,6 +63,10 @@ export class ProductsPage{
 
     async goToPage(pageNumber: number) {
         await this.page.getByRole('button', { name: String(pageNumber)}).click();
+    }
+
+    async openProduct(productName: string) {
+        await this.page.locator('a[href^="/en/product/"]').filter({ hasText: productName }).click();
     }
 
     private async selectSortingOption(option: string){
