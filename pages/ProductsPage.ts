@@ -61,6 +61,10 @@ export class ProductsPage{
         await expect(this.page.locator('a[href^="/en/product/"]')).toHaveCount(count);
     }
 
+    async goToPage(pageNumber: number) {
+        await this.page.getByRole('button', { name: String(pageNumber)}).click();
+    }
+
     private async selectSortingOption(option: string){
         const sortList = this.page.getByRole('combobox');
 
