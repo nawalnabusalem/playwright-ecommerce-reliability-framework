@@ -29,3 +29,19 @@ export function deserializeTanStack(node: any): any {
 
     return node;
 }
+
+export function changeSerializedField(node: any, field: string, value: string) {
+    if (!node || typeof node !== 'object') return;
+
+    if (node.t === 10 && node.p?.k && node.p?.v) {
+        const index = node.p.k.indexOf(field);
+
+        if (index !== -1) {
+            node.p.v[index].s = value;
+        }
+    }
+
+    for (const child of Object.values(node)) {
+        changeSerializedField(child, field, value);
+    }
+}
