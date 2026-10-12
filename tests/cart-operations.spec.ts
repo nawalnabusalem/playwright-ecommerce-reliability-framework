@@ -118,4 +118,3 @@ test('Decrease cart item quantity from 2 to 1 and verify updated totals', async 
     expect(await cartPage.getSummaryTotal()).toBe(originUnitPrice);
 
 });
-
