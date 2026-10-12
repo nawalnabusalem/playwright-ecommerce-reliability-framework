@@ -32,4 +32,8 @@ export class ProductDetailsPage{
         return this.page.getByRole('button', { name: 'Out of Stock' });
     }
 
+    async ClickAddToCartButton(){
+        await this.page.getByRole('button', {name: "Add to Cart"}).click();
+    }
+
 }
