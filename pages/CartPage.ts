@@ -85,6 +85,12 @@ export class CartPage {
         });
     }
 
+    getDecreaseCartItemButton(productName: string): Locator {
+        return this
+            .getCartItemByName(productName)
+            .locator('button:has(+ span.tabular-nums)');
+    }
+
     private getCartItems(): Locator {
         return this.page
             .locator('div.lg\\:col-span-2.divide-y.divide-border')
